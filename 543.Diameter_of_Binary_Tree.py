@@ -10,49 +10,7 @@ class TreeNode:
         self.right = right
 
 
-class Solution:
-    def maxDepth(self, root: Optional[TreeNode]) -> int:
-        # Special case
-        if not root:
-            return 0
-
-        # Normal case
-        return self.maxDepthHelper(root, 0, 0)
-
-    def maxDepthHelper(self, node: TreeNode, depth: int, maxDepth: int) -> int:
-        if not node:
-            return maxDepth
-
-        depth += 1
-        if depth > maxDepth:
-            maxDepth = depth
-
-        maxDepth = self.maxDepthHelper(node.left, depth, maxDepth)
-        maxDepth = self.maxDepthHelper(node.right, depth, maxDepth)
-
-        return maxDepth
-
-
-### Best solution
-class Solution:
-    def maxDepth(self, root: Optional[TreeNode]) -> int:
-        if not root:
-            return 0
-
-        depthLeft = self.maxDepth(root.left)
-        depthRight = self.maxDepth(root.right)
-
-        return 1 + max(depthLeft, depthRight)
-
-
-# solution = Solution()
-
-# node1 = TreeNode(3)
-# node2 = TreeNode(2)
-# node3 = TreeNode(1, node1, node2)
-# print(solution.maxDepth(node3))
-
-
+# Tree Node helpers
 def convertToNode(arr: list) -> TreeNode:
     # count = len(arr)
     # level = 0
@@ -80,11 +38,6 @@ def convertToNode(arr: list) -> TreeNode:
     return root
 
 
-node_list = [3, 9, 20, None, None, 15, 7]
-root = convertToNode(node_list)
-print()
-
-
 def convertToList(root: TreeNode) -> list:
     node_list = []
     level = 0
@@ -99,7 +52,7 @@ def convertToList(root: TreeNode) -> list:
                 break
             count = 0
             have_available_nodes = False
-        
+
         if node is not None:
             have_available_nodes = True
             node_list.append(node.val)
@@ -107,12 +60,47 @@ def convertToList(root: TreeNode) -> list:
         else:
             node_list.append(None)
             nodes.extend([None, None])
-    
+
     # remove last None(s)
     while node_list[-1] is None:
         node_list.pop()
     return node_list
 
-node_list_2 = convertToList(root)
-print(node_list_2)
-        
+
+class Solution:
+    # def diameterOfBinaryTree(self, root: Optional[TreeNode]) -> int:
+    #     return self.diameterOfBinaryTreeHelper(root, 0, 0)[1]
+
+    # def diameterOfBinaryTreeHelper(self, node: Optional[TreeNode], depth: int, max_diameter: int) -> tuple:
+    #     if not node:
+    #         return 0, 0
+
+    #     depth_left, max_diameter_left = self.diameterOfBinaryTreeHelper(node.left, depth + 1, max_diameter)
+    #     depth_right, max_diameter_right = self.diameterOfBinaryTreeHelper(node.right, depth + 1, max_diameter)
+
+    #     return max(depth_left, depth_right) + 1, max(max_diameter, max_diameter_left, max_diameter_right, depth_left + depth_right)
+
+    ### Best way
+    def diameterOfBinaryTree(self, root: Optional[TreeNode]) -> int:
+        self.diameter = 0
+
+        def helper(node):
+            if not node:
+                return 0
+
+            depth_left = helper(node.left)
+            depth_right = helper(node.right)
+            
+            self.diameter = max(self.diameter, depth_left + depth_right)
+
+            return max(depth_left, depth_right) + 1
+
+        helper(root)
+        return self.diameter
+
+
+solution = Solution()
+node_list = [0, 1, 2, 3, 4]
+root = convertToNode(node_list)
+
+print(solution.diameterOfBinaryTree(root))
