@@ -70,39 +70,22 @@ def convertToList(root: TreeNode) -> list:
 
 
 class Solution:
-    # def diameterOfBinaryTree(self, root: Optional[TreeNode]) -> int:
-    #     return self.diameterOfBinaryTreeHelper(root, 0, 0)[1]
+    def isSameTree(self, p: Optional[TreeNode], q: Optional[TreeNode]) -> bool:
 
-    # def diameterOfBinaryTreeHelper(self, node: Optional[TreeNode], depth: int, max_diameter: int) -> tuple:
-    #     if not node:
-    #         return 0, 0
-
-    #     depth_left, max_diameter_left = self.diameterOfBinaryTreeHelper(node.left, depth + 1, max_diameter)
-    #     depth_right, max_diameter_right = self.diameterOfBinaryTreeHelper(node.right, depth + 1, max_diameter)
-
-    #     return max(depth_left, depth_right) + 1, max(max_diameter, max_diameter_left, max_diameter_right, depth_left + depth_right)
-
-    ### Best way
-    def diameterOfBinaryTree(self, root: Optional[TreeNode]) -> int:
-        self.diameter = 0
-
-        def helper(node):
-            if not node:
-                return 0
-
-            depth_left = helper(node.left)
-            depth_right = helper(node.right)
+        def recursion(p: TreeNode, q: TreeNode):
+            if p is None and q is None:
+                return True
+            elif (p is None and q is not None) or (p is not None and q is None) or (p.val != q.val):
+                return False
             
-            self.diameter = max(self.diameter, depth_left + depth_right)
+            return recursion(p.left, q.left) and recursion(p.right, q.right)
 
-            return max(depth_left, depth_right) + 1
+        return recursion(p, q)
 
-        helper(root)
-        return self.diameter
+s = Solution()
+p_list = [1,2]
+q_list = [1,2,3]
+p = convertToNode(p_list)
+q = convertToNode(q_list)
 
-
-solution = Solution()
-node_list = [0, 1, 2, 3, 4]
-root = convertToNode(node_list)
-
-print(solution.diameterOfBinaryTree(root))
+print(s.isSameTree(p, q))

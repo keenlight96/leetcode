@@ -28,7 +28,9 @@ def convertToNode(arr: list) -> TreeNode:
             node = nodes.popleft()
 
         node_left = TreeNode(d.popleft())
-        node_right = TreeNode(d.popleft())
+        node_right = TreeNode(None)
+        if len(d) > 0:
+            node_right = TreeNode(d.popleft())
         nodes.extend([node_left, node_right])
         node.left = node_left if node_left.val is not None else None
         node.right = node_right if node_right.val is not None else None

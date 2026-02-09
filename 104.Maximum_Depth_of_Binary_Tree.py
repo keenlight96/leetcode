@@ -53,6 +53,7 @@ class Solution:
 # print(solution.maxDepth(node3))
 
 
+# Tree Node helpers
 def convertToNode(arr: list) -> TreeNode:
     # count = len(arr)
     # level = 0
@@ -72,17 +73,14 @@ def convertToNode(arr: list) -> TreeNode:
             node = nodes.popleft()
 
         node_left = TreeNode(d.popleft())
-        node_right = TreeNode(d.popleft())
+        node_right = TreeNode(None)
+        if len(d) > 0:
+            node_right = TreeNode(d.popleft())
         nodes.extend([node_left, node_right])
         node.left = node_left if node_left.val is not None else None
         node.right = node_right if node_right.val is not None else None
 
     return root
-
-
-node_list = [3, 9, 20, None, None, 15, 7]
-root = convertToNode(node_list)
-print()
 
 
 def convertToList(root: TreeNode) -> list:
@@ -99,7 +97,7 @@ def convertToList(root: TreeNode) -> list:
                 break
             count = 0
             have_available_nodes = False
-        
+
         if node is not None:
             have_available_nodes = True
             node_list.append(node.val)
@@ -107,11 +105,16 @@ def convertToList(root: TreeNode) -> list:
         else:
             node_list.append(None)
             nodes.extend([None, None])
-    
+
     # remove last None(s)
     while node_list[-1] is None:
         node_list.pop()
     return node_list
+
+
+node_list = [3, 9, 20, None, None, 15, 7]
+root = convertToNode(node_list)
+print()
 
 node_list_2 = convertToList(root)
 print(node_list_2)
