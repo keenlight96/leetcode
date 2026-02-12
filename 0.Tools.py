@@ -8,7 +8,7 @@ def convert_problem_name(s: str):
     return s
 
 print()
-s = "572. Subtree of Another Tree"
+s = "235. Lowest Common Ancestor of a Binary Search Tree"
 filename = convert_problem_name(s)
 if os.path.exists(filename):
     print("File exists")
