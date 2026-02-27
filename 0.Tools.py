@@ -8,7 +8,7 @@ def convert_problem_name(s: str):
     return s
 
 print()
-s = "1448. Count Good Nodes in Binary Tree"
+s = "98. Validate Binary Search Tree"
 filename = convert_problem_name(s)
 if os.path.exists(filename):
     print("File exists")
