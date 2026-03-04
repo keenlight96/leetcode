@@ -8,7 +8,7 @@ def convert_problem_name(s: str):
     return s
 
 print()
-s = "230. Kth Smallest Element in a BST"
+s = "105. Construct Binary Tree from Preorder and Inorder Traversal"
 filename = convert_problem_name(s)
 if os.path.exists(filename):
     print("File exists")

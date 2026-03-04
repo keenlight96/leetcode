@@ -50,7 +50,7 @@ def convert_to_list(root: TreeNode) -> list:
         if count > 2**level:
             if not have_available_nodes:
                 break
-            count = 0
+            level += 1
             have_available_nodes = False
 
         if node is not None:
